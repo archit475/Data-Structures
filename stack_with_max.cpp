@@ -8,25 +8,41 @@ using std::cin;
 using std::string;
 using std::vector;
 using std::cout;
-using std::max_element;
 
 class StackWithMax {
     vector<int> stack;
+    int max_element;
 
   public:
 
     void Push(int value) {
-        stack.push_back(value);
+        if(stack.empty())
+            {
+                stack.push_back(value);
+                max_element=value;
+                return;
+            }
+        if(value > max_element)
+        {
+            stack.push_back(2 * value - max_element); 
+            max_element = value;
+            return; 
+        }
+        else
+            stack.push_back(value);
+
     }
 
     void Pop() {
-        assert(stack.size());
+       int t=stack.back();
         stack.pop_back();
+        if (t > max_element) {  
+            max_element = 2 * max_element - t; 
+        }
     }
 
-    int Max() const {
-        assert(stack.size());
-        return *max_element(stack.begin(), stack.end());
+    int Max() {
+        return max_element;
     }
 };
 
